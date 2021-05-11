@@ -8,11 +8,12 @@ require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
 
 // replace the value below with the Telegram tokenß you receive from @BotFather
-const token = '1641190813:AAEXUnzF9PRrqTdqPRCWc9xmwxHlvKd7-Y0'
+const token = process.env.BOT_TOKEN
+
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});
-var enquires = 530
+var enquires = 863
 bot.on("polling_error", (err) => console.log(err));
 bot.on('message', (msg) => {
     const chatId = msg.chat.id;
