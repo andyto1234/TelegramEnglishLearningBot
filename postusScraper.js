@@ -31,7 +31,7 @@ bot.on('message', (msg) => {
     console.log(chatId)
     enquires++
     bot.sendMessage(process.env.TG_ID, 'Accumulated Enquiries: '+enquires)
-    const text = msg.text;
+    const text = msg.text.replace(/"/g, '');
     var words = text.split('\n');
     const list = []
     if (words[0].toLowerCase() !== "/difficulty") {
@@ -77,7 +77,6 @@ bot.on('message', (msg) => {
                         });
                     } else {
                         list.push(result);
-
                         if (list.length === words.length) {
                             const final = list.join('\n');
                             bot.sendMessage(chatId, final, {parse_mode:'Markdown'});
