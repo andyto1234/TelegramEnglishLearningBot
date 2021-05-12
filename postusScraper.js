@@ -2,6 +2,8 @@ process.env.NTBA_FIX_319 = 1;
 
 const rp = require('request-promise');
 const $ = require('cheerio');
+const translate = require('@vitalets/google-translate-api');
+
 const url = 'https://dictionary.cambridge.org/zht/%E8%A9%9E%E5%85%B8/%E8%8B%B1%E8%AA%9E-%E6%BC%A2%E8%AA%9E-%E7%B9%81%E9%AB%94/';
 // telegram bot setting
 require('dotenv').config();
@@ -54,13 +56,35 @@ bot.on('message', (msg) => {
                             break;
                     }
                     const def = $('.trans.dtrans.dtrans-se.break-cj:first', html).text();
-                    const result = '*'+words[i]+ '* ('+type+') '+def;
-                    list.push(result);
-                    if (list.length === words.length) {
-                        const final = list.join('\n');
-                        bot.sendMessage(chatId, final, {parse_mode:'Markdown'});
-                        console.log(final);
-                    };
+                    var result = '*'+words[i]+ '* ('+type+') '+def;
+                    if (def == "") {
+                        translate(words[i], {to: 'zh-TW'}).then(res => {
+                            if (res.from.text.value == "") {
+                                var result = '*'+words[i]+ '* '+res.text;
+                            } else {
+                                var result = '*'+words[i]+ '* '+res.from.text.value+' '+res.text;
+                            }
+                            list.push(result);
+                            console.log(list);
+
+                            if (list.length === words.length) {
+                                const final = list.join('\n');
+                                bot.sendMessage(chatId, final, {parse_mode:'Markdown'});
+                                console.log(final);
+                            };
+                        }).catch(err => {
+                            console.error(err);
+                        });
+                    } else {
+                        list.push(result);
+
+                        if (list.length === words.length) {
+                            const final = list.join('\n');
+                            bot.sendMessage(chatId, final, {parse_mode:'Markdown'});
+                            console.log(final);
+                        };
+                    }
+
                 })
                 .catch(function(err){
                 //handle error

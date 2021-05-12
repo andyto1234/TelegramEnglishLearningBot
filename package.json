@@ -9,6 +9,8 @@
   "author": "Antman",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/translate": "^6.2.1",
+    "@vitalets/google-translate-api": "^7.0.0",
     "cheerio": "^1.0.0-rc.5",
     "dotenv": "^8.2.0",
     "node-telegram-bot-api": "^0.51.0",
