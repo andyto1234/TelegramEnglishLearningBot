@@ -1,2 +1,2 @@
-require('./postusScraper');
 require('./web');
+require('./postusScraper');
