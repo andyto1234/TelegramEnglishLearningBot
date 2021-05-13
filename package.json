@@ -13,6 +13,7 @@
     "@vitalets/google-translate-api": "^7.0.0",
     "cheerio": "^1.0.0-rc.5",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "node-telegram-bot-api": "^0.51.0",
     "puppeteer": "^7.1.0",
     "request": "^2.88.2",
