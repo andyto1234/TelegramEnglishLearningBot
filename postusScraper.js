@@ -91,15 +91,38 @@ bot.on('message', (msg) => {
         };
     };
     if (is_url(text)==true){
-        bot.sendMessage(chatId, "唔好意思試緊野", {parse_mode:'Markdown'});
+        // bot.sendMessage(chatId, "唔好意思試緊野", {parse_mode:'Markdown'});
         rp(text).then(function(html){
+                bot.sendChatAction(chatId, "typing")
                 //success!
                     // var type = $('.pos.dpos:first', html).text();
+                    const spawn = require("child_process").spawn;
+                    
                     var output = "";
                     $( "p", html).each( function( index, element ){
                         output += $(this).text() + " ";
                     });
                     console.log(output);
+                    score = "";
+                    const pythonProcess = spawn('python',["./difficulty_score.py", output]);
+                    pythonProcess.stdout.on('data', function (data) {
+                        var score = data.toString()
+                        console.log(data.toString());
+                        if (score <= 6) {
+                            var message = "都幾易啵！難度："+score
+                        };
+                        if (score > 6 && score <=8) {
+                            var message = "開始有小小難啵！花多小小時間就讀完㗎喇！難度："+score
+                        }
+                        if (score > 8 && score <= 12) {
+                            var message = "好難！可以用我嚟幫你查字典！難度："+score
+                        }
+                        if (score > 12) {
+                            var message = "難到仆街啵！難度："+score
+                        }
+                        bot.sendMessage(chatId, message, {parse_mode:'Markdown'});
+                        // dataToSend = data.toString();
+                    });
 
                 })
                 .catch(function(err){
