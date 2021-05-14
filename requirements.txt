@@ -9,9 +9,6 @@ anyio @ file:///Users/runner/miniforge3/conda-bld/anyio_1614388809901/work/dist
 appdirs @ file:///home/conda/feedstock_root/build_artifacts/appdirs_1603108395799/work
 appnope @ file:///Users/runner/miniforge3/conda-bld/appnope_1610094688183/work
 argon2-cffi @ file:///Users/runner/miniforge3/conda-bld/argon2-cffi_1610522600362/work
-astor @ file:///home/conda/feedstock_root/build_artifacts/astor_1593610464257/work
-astroid @ file:///Users/runner/miniforge3/conda-bld/astroid_1614552771471/work
-astropy @ file:///Users/runner/miniforge3/conda-bld/astropy_1612734334540/work
 astunparse==1.6.3
 async-generator==1.10
 async-timeout==3.0.1
@@ -22,7 +19,6 @@ backcall @ file:///home/conda/feedstock_root/build_artifacts/backcall_1592338393
 backports.functools-lru-cache==1.6.1
 backports.tempfile==1.0
 backports.weakref==1.0.post1
-beautifulsoup4 @ file:///Users/runner/miniforge3/conda-bld/beautifulsoup4_1589760921411/work
 bleach @ file:///home/conda/feedstock_root/build_artifacts/bleach_1612213472466/work
 brotlipy==0.7.0
 bs4==0.0.1
@@ -86,19 +82,8 @@ Jinja2 @ file:///home/conda/feedstock_root/build_artifacts/jinja2_1612119311452/
 joblib @ file:///home/conda/feedstock_root/build_artifacts/joblib_1612898609989/work
 json5 @ file:///home/conda/feedstock_root/build_artifacts/json5_1600692310011/work
 jsonschema @ file:///home/conda/feedstock_root/build_artifacts/jsonschema_1614815863336/work
-jupyter-client @ file:///home/conda/feedstock_root/build_artifacts/jupyter_client_1610375432619/work
-jupyter-console @ file:///home/conda/feedstock_root/build_artifacts/jupyter_console_1598728807792/work
-jupyter-core @ file:///Users/runner/miniforge3/conda-bld/jupyter_core_1612125292413/work
-jupyter-packaging @ file:///home/conda/feedstock_root/build_artifacts/jupyter-packaging_1613054948399/work
-jupyter-server @ file:///Users/runner/miniforge3/conda-bld/jupyter_server_1614028967618/work
-jupyterlab @ file:///home/conda/feedstock_root/build_artifacts/jupyterlab_1615297377597/work
-jupyterlab-pygments @ file:///home/conda/feedstock_root/build_artifacts/jupyterlab_pygments_1601375948261/work
-jupyterlab-server @ file:///home/conda/feedstock_root/build_artifacts/jupyterlab_server_1613760084674/work
-jupyterlab-widgets @ file:///home/conda/feedstock_root/build_artifacts/jupyterlab_widgets_1609173350931/work
 jwscraper==1.0
 Keras==2.3.1
-Keras-Applications==1.0.8
-Keras-Preprocessing @ file:///home/conda/feedstock_root/build_artifacts/keras-preprocessing_1610713559828/work
 keyring @ file:///Users/runner/miniforge3/conda-bld/keyring_1614462388268/work
 kiwisolver @ file:///Users/runner/miniforge3/conda-bld/kiwisolver_1610099791311/work
 lazy-object-proxy @ file:///Users/runner/miniforge3/conda-bld/lazy-object-proxy_1610094494377/work
@@ -107,7 +92,6 @@ lxml==4.4.1
 Mako @ file:///home/conda/feedstock_root/build_artifacts/mako_1610659158978/work
 Markdown @ file:///home/conda/feedstock_root/build_artifacts/markdown_1614595805172/work
 MarkupSafe @ file:///Users/runner/miniforge3/conda-bld/markupsafe_1610127518065/work
-matplotlib @ file:///Users/runner/miniforge3/conda-bld/matplotlib-base_1594091703837/work
 mccabe==0.6.1
 mistune @ file:///Users/runner/miniforge3/conda-bld/mistune_1610112898998/work
 multidict @ file:///Users/runner/miniforge3/conda-bld/multidict_1610319029348/work
@@ -194,10 +178,6 @@ resampy==0.2.1
 rope @ file:///home/conda/feedstock_root/build_artifacts/rope_1602094471915/work
 rsa==4.6
 ruamel-yaml-conda @ file:///Users/runner/miniforge3/conda-bld/ruamel_yaml_1611943387251/work
-schedule==1.0.0
-scikit-image==0.18.1
-scikit-learn==0.23.2
-scipy==1.3.1
 selenium==3.141.0
 Send2Trash==1.5.0
 six @ file:///home/conda/feedstock_root/build_artifacts/six_1590081179328/work
@@ -215,13 +195,6 @@ sphinxcontrib-serializinghtml==1.1.4
 spyder==3.3.6
 spyder-kernels==0.5.2
 SQLAlchemy @ file:///Users/runner/miniforge3/conda-bld/sqlalchemy_1612225126121/work
-sunpy @ file:///Users/runner/miniforge3/conda-bld/sunpy_1614938079331/work
-sunpy-soar==1.0b1
-sunraster==0.1.dev658+ga54c103
-tensorboard==2.4.0
-tensorboard-plugin-wit==1.7.0
-tensorflow==2.4.1
-tensorflow-estimator==2.4.0
 termcolor==1.1.0
 terminado @ file:///Users/runner/miniforge3/conda-bld/terminado_1609794190668/work
 testpath==0.4.4

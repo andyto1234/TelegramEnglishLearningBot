@@ -114,10 +114,10 @@ bot.on('message', (msg) => {
                         if (score > 6 && score <=8) {
                             var message = "開始有小小難啵！花多小小時間就讀完㗎喇！難度："+score
                         }
-                        if (score > 8 && score <= 12) {
+                        if (score > 8 && score <= 10) {
                             var message = "好難！可以用我嚟幫你查字典！難度："+score
                         }
-                        if (score > 12) {
+                        if (score > 10) {
                             var message = "難到仆街啵！難度："+score
                         }
                         bot.sendMessage(chatId, message, {parse_mode:'Markdown'});
