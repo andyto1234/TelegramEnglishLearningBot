@@ -156,9 +156,9 @@ bot.on('message', (msg) => {
                             var counter = 0
                             const pythonProcess = spawn('python',["./word_list.py", output]);
                             pythonProcess.stdout.on('data', function (data) {
-                                console.log(data)
+                                // console.log(data)
                                 var words = data.toString().replace('[', '').replace(']','').replace(/ /g,'').replace(/’/g, '').replace(/'/g, '').replace(/\n/g,'').split(",")
-                                console.log(words.length, words);
+                                // console.log(words.length, words);
                                 // var words = word_list.split('\n');
                                 for (let i = 0; i < words.length; i++) {
                                     const word_url = url+words[i];
@@ -199,7 +199,7 @@ bot.on('message', (msg) => {
                                                         var result = '*'+words[i]+ '* '+res.from.text.value+' '+res.text;
                                                     }
                                                     list.push(result);
-                                                    console.log(list.length);
+                                                    // console.log(list.length);
                         
                                                     if (list.length === words.length) {
                                                         if (counter == 0) {
