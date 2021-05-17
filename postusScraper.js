@@ -34,7 +34,6 @@ var enquires = 903
 bot.on("polling_error", (err) => console.log(err));
 bot.on('message', (msg) => {
     const chatId = msg.chat.id;
-    console.log(chatId)
     enquires++
     bot.sendMessage(process.env.TG_ID, 'Accumulated Enquiries: '+enquires)
     const text = msg.text.replace(/"/g, '');
@@ -146,6 +145,13 @@ bot.on('message', (msg) => {
                             const message_id= callbackQuery.message.message_id;
                             bot.editMessageReplyMarkup({
                                 inline_keyboard: [
+                                    [
+                                        {
+                                            text: "等一等好快查好",
+                                            callback_data: "data1"
+                                        }
+
+                                    ]
                                 ]
                             }, {
                                 chat_id: chatId, 
@@ -219,6 +225,13 @@ bot.on('message', (msg) => {
                                         //handle error
                                     });
                                 };
+                                bot.editMessageReplyMarkup({
+                                    inline_keyboard: [
+                                    ]
+                                }, {
+                                    chat_id: chatId, 
+                                    message_id: message_id
+                                });
                                 bot.removeListener("callback_query")
                             });
                         });
