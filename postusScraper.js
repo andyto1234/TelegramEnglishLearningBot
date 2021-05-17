@@ -22,6 +22,12 @@ function is_url(str)
           return false;
         }
 }
+
+async function word_def(word) {
+
+    // const word_url = url+words[i];
+
+};
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});
 var enquires = 863
@@ -35,10 +41,9 @@ bot.on('message', (msg) => {
     var words = text.split('\n');
     const list = []
     if (words[0].toLowerCase() !== "/difficulty") {
-        console.log(words[0])
+        bot.sendChatAction(chatId, "typing")
         for (let i = 0; i < words.length; i++) {
             const word_url = url+words[i];
-            bot.sendChatAction(chatId, "typing")
             rp(word_url)
                 .then(function(html){
                 //success!
@@ -102,8 +107,10 @@ bot.on('message', (msg) => {
                     $( "p", html).each( function( index, element ){
                         output += $(this).text() + " ";
                     });
-                    console.log(output);
+                    // console.log(output);
                     score = "";
+
+                    
                     const pythonProcess = spawn('python',["./difficulty_score.py", output]);
                     pythonProcess.stdout.on('data', function (data) {
                         var score = data.toString()
@@ -120,16 +127,108 @@ bot.on('message', (msg) => {
                         if (score > 10) {
                             var message = "難到仆街啵！難度："+score
                         }
-                        bot.sendMessage(chatId, message, {parse_mode:'Markdown'});
-                        // dataToSend = data.toString();
+                        // bot.sendMessage(, )
+                        const opts = {
+                            reply_markup: {
+                                inline_keyboard: [
+                                [
+                                    {
+                                    text: '幫我查定字典',
+                                    callback_data: 'yes'
+                                    }
+                                ]
+                                ]
+                            }
+                            };
+                        bot.sendMessage(chatId, message, opts);
+                        bot.on("callback_query", function onCallbackQuery(callbackQuery) {
+                            // 'callbackQuery' is of type CallbackQuery
+                            const message_id= callbackQuery.message.message_id;
+                            bot.editMessageReplyMarkup({
+                                inline_keyboard: [
+                                ]
+                            }, {
+                                chat_id: chatId, 
+                                message_id: message_id
+                            });
+                            bot.sendChatAction(chatId, "typing")
+                            const list = []
+                            var counter = 0
+                            const pythonProcess = spawn('python',["./word_list.py", output]);
+                            pythonProcess.stdout.on('data', function (data) {
+                                console.log(data)
+                                var words = data.toString().replace('[', '').replace(']','').replace(/ /g,'').replace(/’/g, '').replace(/'/g, '').replace(/\n/g,'').split(",")
+                                console.log(words.length, words);
+                                // var words = word_list.split('\n');
+                                for (let i = 0; i < words.length; i++) {
+                                    const word_url = url+words[i];
+                                        rp(word_url)
+                                        .then(function(html){
+                                        //success!
+                                            // var type = $('.pos.dpos:first', html).text();
+                                            var type = $('.ti.tb:first', html).text().toLowerCase();
+                                            switch(type){
+                                                case "noun":
+                                                    type = 'n.';
+                                                    break;
+                                                case "verb":
+                                                    type = 'v.';
+                                                    break;
+                                                case "adjective":
+                                                    type = 'adj.';
+                                                    break;
+                                            }
+                                            const def = $('.trans.dtrans.dtrans-se.break-cj:first', html).text();
+                                            var result = '*'+words[i]+ '* ('+type+') '+def;
+                                            if (def !== "") {
+                                                list.push(result);
+                                                console.log(list.length)
+                                                if (list.length === words.length) {
+                                                    if (counter == 0) {
+                                                        var final = list.join('\n');
+                                                        bot.sendMessage(chatId, final, {parse_mode:'Markdown'});
+                                                        console.log("cambridge", final);
+                                                        counter ++
+                                                    }
+                                                };
+                                            } else {
+                                                translate(words[i], {to: 'zh-TW'}).then(res => {
+                                                    if (res.from.text.value == "") {
+                                                        var result = '*'+words[i]+ '* '+res.text;
+                                                    } else {
+                                                        var result = '*'+words[i]+ '* '+res.from.text.value+' '+res.text;
+                                                    }
+                                                    list.push(result);
+                                                    console.log(list.length);
+                        
+                                                    if (list.length === words.length) {
+                                                        if (counter == 0) {
+                                                            var final = list.join('\n');
+                                                            bot.sendMessage(chatId, final, {parse_mode:'Markdown'});
+                                                            console.log("google async", final);
+                                                            counter ++
+                                                        }
+                                                        
+                                                    };
+                                                }).catch(err => {
+                                                    console.error(err);
+                                                });
+                                            }                        
+                                        })
+                                        .catch(function(err){
+                                        //handle error
+                                    });
+                                };
+                                bot.removeListener("callback_query")
+                            });
+                        });
                     });
 
                 })
                 .catch(function(err){
                 //handle error
             });
-    }
-    
+    }    
 });
 
 
