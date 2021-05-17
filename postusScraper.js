@@ -142,22 +142,23 @@ bot.on('message', (msg) => {
                         bot.sendMessage(chatId, message, opts);
                         bot.on("callback_query", function onCallbackQuery(callbackQuery) {
                             // 'callbackQuery' is of type CallbackQuery
-                            bot.removeListener("callback_query")
                             const message_id= callbackQuery.message.message_id;
                             bot.editMessageReplyMarkup({
                                 inline_keyboard: [
-                                    [
-                                        {
-                                            text: "等一等好快查好",
-                                            callback_data: "data1"
-                                        }
+                                    // [
+                                    //     {
+                                    //         text: "等一等好快查好",
+                                    //         callback_data: "data1"
+                                    //     }
 
-                                    ]
+                                    // ]
                                 ]
                             }, {
                                 chat_id: chatId, 
                                 message_id: message_id
                             });
+                            bot.removeListener("callback_query")
+
                             bot.sendChatAction(chatId, "typing")
                             const list = []
                             var counter = 0
@@ -226,13 +227,6 @@ bot.on('message', (msg) => {
                                         //handle error
                                     });
                                 };
-                                bot.editMessageReplyMarkup({
-                                    inline_keyboard: [
-                                    ]
-                                }, {
-                                    chat_id: chatId, 
-                                    message_id: message_id
-                                });
                             });
                         });
                     });
