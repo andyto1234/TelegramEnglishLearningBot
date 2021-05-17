@@ -30,7 +30,7 @@ async function word_def(word) {
 };
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});
-var enquires = 863
+var enquires = 903
 bot.on("polling_error", (err) => console.log(err));
 bot.on('message', (msg) => {
     const chatId = msg.chat.id;
