@@ -34,13 +34,13 @@ var enquires = 903
 bot.on("polling_error", (err) => console.log(err));
 bot.on('message', (msg) => {
     const chatId = msg.chat.id;
+    bot.sendChatAction(chatId, "typing")
     enquires++
     bot.sendMessage(process.env.TG_ID, 'Accumulated Enquiries: '+enquires)
     const text = msg.text.replace(/"/g, '');
     var words = text.split('\n');
     const list = []
     if (words[0].toLowerCase() !== "/difficulty") {
-        bot.sendChatAction(chatId, "typing")
         for (let i = 0; i < words.length; i++) {
             const word_url = url+words[i];
             rp(word_url)
@@ -97,7 +97,7 @@ bot.on('message', (msg) => {
     if (is_url(text)==true){
         // bot.sendMessage(chatId, "唔好意思試緊野", {parse_mode:'Markdown'});
         rp(text).then(function(html){
-                bot.sendChatAction(chatId, "typing")
+                // bot.sendChatAction(chatId, "typing")
                 //success!
                     // var type = $('.pos.dpos:first', html).text();
                     const spawn = require("child_process").spawn;
