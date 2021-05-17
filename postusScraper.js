@@ -182,12 +182,12 @@ bot.on('message', (msg) => {
                                             var result = '*'+words[i]+ '* ('+type+') '+def;
                                             if (def !== "") {
                                                 list.push(result);
-                                                console.log(list.length)
+                                                // console.log(list.length)
                                                 if (list.length === words.length) {
                                                     if (counter == 0) {
                                                         var final = list.join('\n');
                                                         bot.sendMessage(chatId, final, {parse_mode:'Markdown'});
-                                                        console.log("cambridge", final);
+                                                        // console.log("cambridge", final);
                                                         counter ++
                                                     }
                                                 };
@@ -205,7 +205,7 @@ bot.on('message', (msg) => {
                                                         if (counter == 0) {
                                                             var final = list.join('\n');
                                                             bot.sendMessage(chatId, final, {parse_mode:'Markdown'});
-                                                            console.log("google async", final);
+                                                            // console.log("google async", final);
                                                             counter ++
                                                         }
                                                         
