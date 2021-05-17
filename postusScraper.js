@@ -142,6 +142,7 @@ bot.on('message', (msg) => {
                         bot.sendMessage(chatId, message, opts);
                         bot.on("callback_query", function onCallbackQuery(callbackQuery) {
                             // 'callbackQuery' is of type CallbackQuery
+                            bot.removeListener("callback_query")
                             const message_id= callbackQuery.message.message_id;
                             bot.editMessageReplyMarkup({
                                 inline_keyboard: [
@@ -232,7 +233,6 @@ bot.on('message', (msg) => {
                                     chat_id: chatId, 
                                     message_id: message_id
                                 });
-                                bot.removeListener("callback_query")
                             });
                         });
                     });
