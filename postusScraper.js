@@ -27,6 +27,7 @@ const bot = new TelegramBot(token, {polling: true});
 var enquires = 929
 bot.on("polling_error", (err) => console.log(err));
 bot.on('message', (msg) => {
+    bot.removeListener("callback_query")
     const chatId = msg.chat.id;
     bot.sendChatAction(chatId, "typing")
     enquires++
@@ -155,7 +156,7 @@ bot.on('message', (msg) => {
                             }
                             };
                         bot.sendMessage(chatId, message, opts);
-                        bot.on("callback_query", function onCallbackQuery(callbackQuery) {
+                        bot.once("callback_query", function onCallbackQuery(callbackQuery) {
                             // 'callbackQuery' is of type CallbackQuery
                             const message_id= callbackQuery.message.message_id;
                             bot.editMessageReplyMarkup({
@@ -265,7 +266,7 @@ bot.on('message', (msg) => {
                                     });
                                 };
                             });
-                            bot.removeListener("callback_query")
+                            
 
                         });
                     });
