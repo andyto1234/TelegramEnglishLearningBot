@@ -22,12 +22,6 @@ function is_url(str)
           return false;
         }
 }
-
-async function word_def(word) {
-
-    // const word_url = url+words[i];
-
-};
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});
 var enquires = 903
@@ -63,12 +57,30 @@ bot.on('message', (msg) => {
                     var result = '*'+words[i]+ '* ('+type+') '+def;
                     if (def == "") {
                         translate(words[i], {to: 'zh-TW'}).then(res => {
-                            if (res.from.text.value == "") {
-                                var result = '*'+words[i]+ '* '+res.text;
+                            if (words[i].split(' ').length == 1) {
+                                var pos = require('pos');
+                                var words_lexer = new pos.Lexer().lex(words[i]);
+                                var tagger = new pos.Tagger();
+                                var taggedWords = tagger.tag(words_lexer);
+                                for (j in taggedWords) {
+                                    var taggedWord = taggedWords[j];
+                                    var tag = taggedWord[1];
+                                    if (tag.includes('NN')) {var tag = "n."};
+                                    if (tag.includes('VB')) {var tag = "v."};
+                                    if (tag.includes('RB')) {var tag = "adv."};
+                                    if (tag.includes('JJ')) {var tag = "adj."};
+                                }
+                                var result = '*'+words[i]+ '* ('+tag+') '
                             } else {
-                                var result = '*'+words[i]+ '* '+res.from.text.value+' '+res.text;
+                                var result = '*'+words[i]+ '* '
+                            }
+                            if (res.from.text.value == "") {
+                                var result = result+res.text;
+                            } else {
+                                var result = result+res.from.text.value+' '+res.text;
                             }
                             list.push(result);
+                            // console.log(result);
                             console.log(list);
 
                             if (list.length === words.length) {
@@ -158,10 +170,14 @@ bot.on('message', (msg) => {
                             pythonProcess.stdout.on('data', function (data) {
                                 // console.log(data)
                                 var words = data.toString().replace('[', '').replace(']','').replace(/ /g,'').replace(/’/g, '').replace(/"/g, '').replace(/'/g, '').replace(/\n/g,'').split(",")
-                                if (words.length > 30) {
+                                if (words.length > 30 && words.length<65) {
                                     bot.sendMessage(chatId, "好多生字！麻煩你等多我一陣！", {parse_mode:'Markdown'});
                                     bot.sendMessage(chatId, "如果我冇反應就試多次啦！", {parse_mode:'Markdown'});
-                                    bot.sendChatAction(chatId, "typing");
+                                    bot.sendChatAction(chatId, "typing");                                
+                                }
+                                if (words.length>64) {
+                                    bot.sendMessage(chatId, "唔好意思依篇可能太多生字，好大機會覆唔到你:(", {parse_mode:'Markdown'});
+                                    bot.sendChatAction(chatId, "typing");                                
                                 }
                                 console.log(words);
                                 // var words = word_list.split('\n');
@@ -199,10 +215,27 @@ bot.on('message', (msg) => {
                                                 };
                                             } else {
                                                 translate(words[i], {to: 'zh-TW'}).then(res => {
-                                                    if (res.from.text.value == "") {
-                                                        var result = '*'+words[i]+ '* '+res.text;
+                                                    if (words[i].split(' ').length == 1) {
+                                                        var pos = require('pos');
+                                                        var words_lexer = new pos.Lexer().lex(words[i]);
+                                                        var tagger = new pos.Tagger();
+                                                        var taggedWords = tagger.tag(words_lexer);
+                                                        for (j in taggedWords) {
+                                                            var taggedWord = taggedWords[j];
+                                                            var tag = taggedWord[1];
+                                                            if (tag.includes('NN')) {var tag = "n."};
+                                                            if (tag.includes('VB')) {var tag = "v."};
+                                                            if (tag.includes('RB')) {var tag = "adv."};
+                                                            if (tag.includes('JJ')) {var tag = "adj."};
+                                                        }
+                                                        var result = '*'+words[i]+ '* ('+tag+') '
                                                     } else {
-                                                        var result = '*'+words[i]+ '* '+res.from.text.value+' '+res.text;
+                                                        var result = '*'+words[i]+ '* '
+                                                    }
+                                                    if (res.from.text.value == "") {
+                                                        var result = result+res.text;
+                                                    } else {
+                                                        var result = result+res.from.text.value+' '+res.text;
                                                     }
                                                     list.push(result);
                                                     console.log(list.length);
