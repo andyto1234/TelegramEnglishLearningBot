@@ -24,7 +24,7 @@ function is_url(str)
 }
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});
-var enquires = 903
+var enquires = 929
 bot.on("polling_error", (err) => console.log(err));
 bot.on('message', (msg) => {
     const chatId = msg.chat.id;
@@ -51,6 +51,9 @@ bot.on('message', (msg) => {
                             break;
                         case "adjective":
                             type = 'adj.';
+                            break;
+                        case "adverb":
+                            type = 'adv.';
                             break;
                     }
                     const def = $('.trans.dtrans.dtrans-se.break-cj:first', html).text();
@@ -198,6 +201,9 @@ bot.on('message', (msg) => {
                                                     break;
                                                 case "adjective":
                                                     type = 'adj.';
+                                                    break;
+                                                case "adverb":
+                                                    type = 'adv.';
                                                     break;
                                             }
                                             const def = $('.trans.dtrans.dtrans-se.break-cj:first', html).text();
