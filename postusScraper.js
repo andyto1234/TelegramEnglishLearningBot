@@ -127,7 +127,7 @@ bot.on('message', (msg) => {
                     
                     const pythonProcess = spawn('python',["./difficulty_score.py", output]);
                     pythonProcess.stdout.on('data', function (data) {
-                        var score = data.toString().replace(/ /g,'').replace(/\n/g,'')
+                        var score = parseFloat(data.toString().replace(/ /g,'').replace(/\n/g,''))
                         console.log(score);
                         if (score <= 6) {
                             var message = "都幾易啵！難度："+score
