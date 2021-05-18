@@ -112,8 +112,8 @@ bot.on('message', (msg) => {
                     
                     const pythonProcess = spawn('python',["./difficulty_score.py", output]);
                     pythonProcess.stdout.on('data', function (data) {
-                        var score = data.toString()
-                        console.log(data.toString());
+                        var score = data.toString().replace(/ /g,'').replace(/\n/g,'')
+                        console.log(score);
                         if (score <= 6) {
                             var message = "都幾易啵！難度："+score
                         };
@@ -145,19 +145,11 @@ bot.on('message', (msg) => {
                             const message_id= callbackQuery.message.message_id;
                             bot.editMessageReplyMarkup({
                                 inline_keyboard: [
-                                    // [
-                                    //     {
-                                    //         text: "等一等好快查好",
-                                    //         callback_data: "data1"
-                                    //     }
-
-                                    // ]
                                 ]
                             }, {
                                 chat_id: chatId, 
                                 message_id: message_id
                             });
-                            bot.removeListener("callback_query")
 
                             bot.sendChatAction(chatId, "typing")
                             const list = []
@@ -165,14 +157,20 @@ bot.on('message', (msg) => {
                             const pythonProcess = spawn('python',["./word_list.py", output]);
                             pythonProcess.stdout.on('data', function (data) {
                                 // console.log(data)
-                                var words = data.toString().replace('[', '').replace(']','').replace(/ /g,'').replace(/’/g, '').replace(/'/g, '').replace(/\n/g,'').split(",")
-                                // console.log(words.length, words);
+                                var words = data.toString().replace('[', '').replace(']','').replace(/ /g,'').replace(/’/g, '').replace(/"/g, '').replace(/'/g, '').replace(/\n/g,'').split(",")
+                                if (words.length > 30) {
+                                    bot.sendMessage(chatId, "好多生字！麻煩你等多我一陣！", {parse_mode:'Markdown'});
+                                    bot.sendMessage(chatId, "如果我冇反應就試多次啦！", {parse_mode:'Markdown'});
+                                    bot.sendChatAction(chatId, "typing");
+                                }
+                                console.log(words);
                                 // var words = word_list.split('\n');
                                 for (let i = 0; i < words.length; i++) {
                                     const word_url = url+words[i];
                                         rp(word_url)
                                         .then(function(html){
                                         //success!
+                                            // console.log(words.length)
                                             // var type = $('.pos.dpos:first', html).text();
                                             var type = $('.ti.tb:first', html).text().toLowerCase();
                                             switch(type){
@@ -190,12 +188,12 @@ bot.on('message', (msg) => {
                                             var result = '*'+words[i]+ '* ('+type+') '+def;
                                             if (def !== "") {
                                                 list.push(result);
-                                                // console.log(list.length)
+                                                console.log(list.length)
                                                 if (list.length === words.length) {
                                                     if (counter == 0) {
                                                         var final = list.join('\n');
                                                         bot.sendMessage(chatId, final, {parse_mode:'Markdown'});
-                                                        // console.log("cambridge", final);
+                                                        console.log("cambridge", final);
                                                         counter ++
                                                     }
                                                 };
@@ -207,13 +205,13 @@ bot.on('message', (msg) => {
                                                         var result = '*'+words[i]+ '* '+res.from.text.value+' '+res.text;
                                                     }
                                                     list.push(result);
-                                                    // console.log(list.length);
+                                                    console.log(list.length);
                         
                                                     if (list.length === words.length) {
                                                         if (counter == 0) {
                                                             var final = list.join('\n');
                                                             bot.sendMessage(chatId, final, {parse_mode:'Markdown'});
-                                                            // console.log("google async", final);
+                                                            console.log("google async", final);
                                                             counter ++
                                                         }
                                                         
@@ -228,6 +226,8 @@ bot.on('message', (msg) => {
                                     });
                                 };
                             });
+                            bot.removeListener("callback_query")
+
                         });
                     });
 
