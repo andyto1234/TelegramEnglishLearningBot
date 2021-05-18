@@ -144,7 +144,7 @@ bot.on('message', (msg) => {
                         }
                         // bot.sendMessage(, )
                         const opts = {
-                            reply_markup: {
+                            reply_markup: JSON.stringify({
                                 inline_keyboard: [
                                 [
                                     {
@@ -153,7 +153,7 @@ bot.on('message', (msg) => {
                                     }
                                 ]
                                 ]
-                            }
+                            })
                             };
                         bot.sendMessage(chatId, message, opts);
                         bot.once("callback_query", function onCallbackQuery(callbackQuery) {
